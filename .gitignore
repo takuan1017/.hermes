@@ -7,8 +7,12 @@
 auth.json
 auth.lock
 pairing/
-memories/
 .update_check
+
+# 外部メモリプロバイダの作業領域だけは除外、MEMORY.md/USER.md は追跡
+memories/*
+!memories/MEMORY.md
+!memories/USER.md
 
 # ランタイム・ログ（prompt指定）
 logs/
