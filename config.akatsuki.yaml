@@ -1,0 +1,144 @@
+# あかつきHD × Hermes Agent — 運用 overlay config
+# ===================================================
+# このファイルは ~/.hermes/config.yaml の **上書きではなく参照用** です。
+# hermes setup で生成された config.yaml は別途そのまま維持されます。
+#
+# このファイルに記載したポリシーは、
+#   - 各 Director Skill の YAML frontmatter (allowed_tools / denied_commands)
+#   - hermes config set で反映
+# を通じて実効化する想定です。
+#
+# 環境変数は ${VAR} 形式で参照（~/.hermes/.env から読み込み）。
+# ===================================================
+
+akatsuki:
+  version: "1.0.0"
+  design: "Grok Optimized Design v1.0"
+  default_model: claude-sonnet-4-5
+  fallback_model: kimi-coding  # Moonshot Kimi 併用（オプショナル）
+  opus_model: claude-opus-4-5  # CEO Skill の複雑判定時のみ
+
+  # --- 全Director共通の denylist（禁止コマンド） ---
+  # Section 3.2 共通denylist
+  common_denylist:
+    # 破壊的ファイル操作
+    - "rm -rf *"
+    - "rm -rf /"
+    - "rm -rf ~/"
+    - "rm -rf ~/.hermes"
+    - "rm -rf ~/q10_tool"
+    # 権限昇格
+    - "sudo *"
+    - "su -*"
+    - "chown -R *"
+    - "chmod -R 777 *"
+    # パッケージインストール（許可なし禁止）
+    - "brew install *"
+    - "pip install *"
+    - "npm install -g *"
+    - "pipx install *"
+    # git 破壊的操作
+    - "git push --force *"
+    - "git reset --hard *"
+    - "git clean -fdx"
+    # 外部送信・流出
+    - "curl -X POST *"
+    - "curl -d @.env*"
+    - "scp ~/.hermes/.env *"
+    - "rsync ~/.hermes/.env *"
+    # 認証情報の露出
+    - "cat ~/.hermes/.env"
+    - "cat ~/.hermes/auth.json"
+    - "env | grep -i key"
+    - "env | grep -i secret"
+    # Q10 子会社境界（HD側から書き込み禁止）
+    - "echo * > ~/q10_tool/*"
+    - "tee ~/q10_tool/*"
+    - "rm ~/q10_tool/*"
+    - "mv * ~/q10_tool/*"
+    - "cp * ~/q10_tool/*"
+    - "sed -i * ~/q10_tool/*"
+    # gateway 手動操作（人間のみ）
+    - "hermes gateway stop"
+    - "hermes gateway restart"
+
+  # --- Director ごとのポリシー上書き ---
+  director_policies:
+
+    ceo:
+      model: claude-sonnet-4-5
+      model_escalation: claude-opus-4-5   # 複雑判定時のみ
+      max_turns: 12
+      compress: aggressive
+      api_key_env: "${ANTHROPIC_API_KEY}"
+
+    director-ec:
+      model: claude-sonnet-4-5
+      max_turns: 12
+      compress: aggressive
+      # Q10 は読み取り専用。書き込みパスを明示denyに追加
+      additional_denylist:
+        - "* > ~/q10_tool/*"
+        - "touch ~/q10_tool/*"
+      read_only_paths:
+        - "~/q10_tool/logs"
+        - "~/q10_tool/data"
+
+    director-dx:
+      model: claude-sonnet-4-5
+      max_turns: 12
+      compress: aggressive
+      allowed_read_paths:
+        - "~/.hermes/logs"
+        - "~/.hermes/sessions"
+        - "~/Library/LaunchAgents"
+        - "~/q10_tool/logs"
+      cost_threshold_jpy: 4000   # 超えたら Pro ダウングレード推奨
+
+    director-sns:
+      model: claude-sonnet-4-5
+      max_turns: 8
+      status: under_construction
+
+    director-newbiz:
+      model: claude-sonnet-4-5
+      max_turns: 8
+      status: under_construction
+
+    # Finance Director は Phase 1 で読み取り専用を徹底
+    # Section 3.2 共通denylistに加え、書き込み全般をdeny
+    director-finance:
+      model: claude-sonnet-4-5
+      max_turns: 8
+      read_only: true
+      override_denylist:
+        # 書き込み系を広く禁止
+        - "echo * >> *"
+        - "echo * > *"
+        - "tee *"
+        - "sed -i *"
+        - "git commit *"
+        - "git push *"
+        - "mv * *"
+        - "cp * *"
+        - "touch *"
+        - "mkdir *"
+        - "rm *"
+      allowed_tools:
+        - read_file
+        - grep
+        - list_dir
+
+  # --- 朝ブリーフ設定 ---
+  daily_brief:
+    enabled: true
+    time: "07:30"
+    timezone: "Asia/Tokyo"
+    channels:
+      - discord
+      - telegram
+    sections:
+      - ec/q10-status
+      - dx/infra-health
+      - dx/cron-status
+      - dx/cost-optimizer   # 毎日必須

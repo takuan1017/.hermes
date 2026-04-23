@@ -1,0 +1,72 @@
+# あかつきHD × Hermes Agent — .gitignore
+# 機密情報・ランタイム生成物・Hermes Agent 本体をリポジトリから除外する
+
+# 機密情報（絶対にコミットしない）
+.env
+.env.*
+auth.json
+auth.lock
+pairing/
+memories/
+.update_check
+
+# ランタイム・ログ（prompt指定）
+logs/
+sessions/
+
+# Hermes Agent 本体コード（別管理）
+hermes-agent/
+bin/
+
+# キャッシュ・一時ファイル
+audio_cache/
+image_cache/
+sandboxes/
+
+# cron 登録ファイル（生成物）
+cron/
+
+# hooks（ユーザー定義以外、主に生成物）
+hooks/
+
+# Hermes バンドルスキル（あかつき以外は追跡しない）
+skills/apple/
+skills/autonomous-ai-agents/
+skills/creative/
+skills/data-science/
+skills/devops/
+skills/diagramming/
+skills/dogfood/
+skills/domain/
+skills/email/
+skills/feeds/
+skills/gaming/
+skills/gifs/
+skills/github/
+skills/inference-sh/
+skills/mcp/
+skills/media/
+skills/mlops/
+skills/note-taking/
+skills/productivity/
+skills/red-teaming/
+skills/research/
+skills/smart-home/
+skills/social-media/
+skills/software-development/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# エディタ
+.vscode/
+.idea/
+*.swp
+*~
