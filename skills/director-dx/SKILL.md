@@ -6,7 +6,7 @@ author: akatsuki-hd
 metadata:
   hermes:
     tags: [akatsuki, dx, infra, cron, cost, observability]
-model: claude-sonnet-4-5
+model: claude-sonnet-4-6
 max_turns: 12
 ---
 
