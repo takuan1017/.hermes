@@ -62,7 +62,7 @@
 - 設計書: `~/docs/hermes_akatsuki_spec_v2.md`（Grok Optimized Design v1.0）
 - レビュードキュメント: `~/docs/hermes_ticket1_review.md`
 - 子会社コード（読み取り専用）: `~/q10_tool/`
-- LaunchAgent: `~/Library/LaunchAgents/com.akatsuki.hermes.plist`
+- LaunchAgent: `~/Library/LaunchAgents/ai.hermes.gateway.plist`（旧 `com.kiuas.hermes.plist` は 2026-05-01 Phase A2-R4 で退避済み）
 
 ## トークン効率運用ルール（ハードリミット）
 
