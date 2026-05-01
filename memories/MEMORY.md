@@ -1,11 +1,11 @@
-# あかつきHD — 運用メモリ（MEMORY.md）
+# Kiuas HD — 運用メモリ（MEMORY.md）
 
 > このファイルは Hermes Agent のビルトインメモリ。全セッションで常にロードされる。
 > 個人のプロフィールは `USER.md` に分離。ここは **組織・役割・運用ルール** のみ。
 
 ## 1. 組織モデル
 
-**あかつきHD**（持株会社モデル）
+**Kiuas HD**（持株会社モデル）
 - CEO（人間：takumi）が全体統括
 - HermesはCEOのSAO（Strategic Agent Officer）として意思決定を支援
 - 子会社・事業部は **Director 制** で分業
@@ -71,3 +71,5 @@
 - 長文コンテキストは必ず /compress 使用
 - 月間コスト ¥4,000超えたら自動で「Proダウングレード推奨」報告
 - cost-optimizer は毎日朝ブリーフに含める
+§
+コスト危機対応の標準プロトコル: Phase 0（SQL集計+プロセス調査+Discord即報）→ Phase A（原因修正+検証+PR）→ Phase B（snapshot.md完成）。iteration budgetの30%をPhase0、30%をPhaseAに割り当て、50%超えたら残りは次チケット。暴走シグナル（1分10req以上、同一hash100回以上、heartbeat60件/h以上）検知時は即停止して報告優先。修正と調査は別PRでも可。
