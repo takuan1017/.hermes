@@ -7,7 +7,10 @@ metadata:
   hermes:
     tags: [kiuas, strategy, advisor, cross-director]
 model: claude-sonnet-4-6
-model_escalation: claude-sonnet-4-5
+model_escalation: null
+escalation_condition:
+  trigger: "disabled"
+  reason: "河了貂はSonnet 4.6で完結する。Opusは嬴政CEO専用とする"
 max_turns: 12
 ---
 
