@@ -1,9 +1,9 @@
-# User Profile — takumi
+# User Profile — たくみ
 
 ## Identity
 
-- **Name:** Takumi Ueshima（上島 匠）
-- **Role:** CEO / Founder — あかつきHD（持株会社モデル）
+- **Name:** Takumi Ueshima（植嶋 拓海）
+- **Role:** CEO / Founder — Kiuas HD（持株会社モデル）
 - **Email:** tahaizhidao@gmail.com
 - **Timezone:** Asia/Tokyo（JST）
 
@@ -34,9 +34,11 @@
 - sudo 使用禁止（許可なしに）
 - 新規パッケージインストール禁止（許可なしに）
 - `.env` の中身は絶対に出力しない
-- `hermes gateway start` の起動は takumi 本人が行う
+- `hermes gateway start` の起動は たくみ 本人が行う
 
 ## Channels
 
 - Discord / Telegram 経由で Hermes にアクセス
 - 朝ブリーフは毎日自動配信予定
+§
+りゅはコスト異常検知時、Phase 0（原因特定）→ Phase A（修正）→ Phase B（文書化）の順序を厳守する。各phaseの完了条件と連絡先（Discord即報、PR作成、7:00レビュー可能）を明確に指示するスタイル。read-only調査と実際の修正は明確に分離する。
